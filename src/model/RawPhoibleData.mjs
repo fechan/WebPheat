@@ -86,7 +86,7 @@ class RawPhoibleData {
       if (comparison < 0) {
         searchRangeLower = searchAt + 1;
       } else if (comparison > 0) {
-        searchRangeUpper = searchAt - 1;
+        searchRangeUpper = searchAt;
       } else {
         let utf8 = new TextEncoder("utf-8");
         // get the IPA with the fewest diacritics with the same feat spec
