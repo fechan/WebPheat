@@ -5,7 +5,7 @@ class FeaturalSpecifications {
   #featSpecsBytes;
 
   /**
-   * 
+   * A complete feature matrix that defines a segment
    * @param {RawPhoibleData} rawPhoibleData 
    * @param {Object} featureMatrix
    */
@@ -20,6 +20,10 @@ class FeaturalSpecifications {
     this.#featSpecsBytes = featSpecsBytes;
   }
 
+  /**
+   * Get featural specifications as a dict of `{"feature": "value"}`
+   * @returns {Object} Featural specifications dict
+   */
   getDict() {
     if (this.#featSpecsDict === undefined) {
       this.#featSpecsDict = this.rawPhoibleData.decodeFeatSpecsBytes(this.#featSpecsBytes);
@@ -29,7 +33,7 @@ class FeaturalSpecifications {
 
   /**
    * Get the featural specifications as bytes
-   * @returns {Uint8Array}
+   * @returns {Uint8Array} Featural specifications bytes
    */
   getBytes() {
     if (this.#featSpecsBytes === undefined) {

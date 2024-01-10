@@ -31,7 +31,10 @@ class Segment {
     this.rawPhoibleData = rawPhoibleData;
   }
 
-
+  /**
+   * Get the featural specifications of this segment
+   * @returns {FeaturalSpecifications} This segment's featural specifications
+   */
   getFeatSpecs() {
     if (this.#featSpecs === undefined) { // either ipa or featSpec is defined at all times
       this.#featSpecs = this.rawPhoibleData.findSpecsByIpa(this.#ipa);
@@ -39,6 +42,10 @@ class Segment {
     return this.#featSpecs;
   }
 
+  /**
+   * Get the IPA of this segment
+   * @returns {String} This segment's IPA
+   */
   getIpa() {
     if (this.#ipa === undefined) { // either ipa or featSpec is defined at all times
       this.#ipa = this.rawPhoibleData.findIpaByFeatSpecs(this.#featSpecs);
