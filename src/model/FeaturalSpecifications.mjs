@@ -43,7 +43,7 @@ class FeaturalSpecifications {
    * @param {FeaturalSpecifications} otherFeatSpecs Featural specifications to compare against
    * @returns {Boolean} True if they're both equal
    */
-  is(otherFeatSpecs) {
+  equal(otherFeatSpecs) {
     return this.cmp(otherFeatSpecs) === 0;
   }
 

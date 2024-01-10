@@ -88,11 +88,47 @@ class RawPhoibleData {
       } else if (comparison > 0) {
         searchRangeUpper = searchAt - 1;
       } else {
-        return this.segmentsIpa[searchAt];
+        let utf8 = new TextEncoder("utf-8");
+        // get the IPA with the fewest diacritics
+        return this.#findIpaWithSameSpecs(searchAt).reduce(
+          (best, current) => utf8.encode(best).length < utf8.encode(current).length ? best : current
+        );
       }
     }
 
     return null;
+  }
+
+  /**
+   * Find IPA with the same featural specifications as the segment at the given
+   * index
+   * 
+   * According to linguistic theory, IPA and feat specs should be 1-to-1, but
+   * PHOIBLE isn't perfect
+   * @param {Number} index Order the segment
+   * @returns {String[]} List of matching IPA by featural specifications
+   */
+  #findIpaWithSameSpecs(index) {
+    let ipas = [this.segmentsIpa[index]];
+    let inputFeatSpecs = this.findSpecsByIndex(index)
+
+    // search lower indices first
+    for (let i=index; i > -1; i--) {
+      let otherFeatSpecs = this.findSpecsByIndex(i);
+      if (otherFeatSpecs.equal(inputFeatSpecs)) {
+        ipas.push(this.segmentsIpa[i]);
+      }
+    }
+
+    // search higher indices
+    for (let i=index; i < this.segmentsIpa.length; i++) {
+      let otherFeatSpecs = this.findSpecsByIndex(i);
+      if (otherFeatSpecs.equal(inputFeatSpecs)) {
+        ipas.push(this.segmentsIpa[i]);
+      }
+    }
+
+    return ipas;
   }
 
   /**
