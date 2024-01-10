@@ -1,14 +1,26 @@
+import Segment from "./Segment.mjs";
+
 class Inventory {
   /**
-   * A phonemic inventory
-   * @param {Phoneme[]} phonemes 
-   * @param {RawPhoibleData} rawPhoibleData
+   * A segment inventory
+   * @param {Segment[]} segments List of segments in this inventory
    */
-  constructor(phonemes, rawPhoibleData) {
-    this.rawPhoibleData = rawPhoibleData;
+  constructor(segments) {
+    this.segments = segments;
+  }
 
-    this.phonemes = phonemes;
-    this.featSpecifications = this.findSpecs(phonemes);
+  /**
+   * Transform all phonemes in this inventory according to partial featural
+   * specifications
+   * @param {Object} partialFeatSpecsDict Partial featural specifications dict
+   * @returns {Inventory} New transformed inventory
+   */
+  transform(partialFeatSpecsDict) {
+    return new Inventory(this.segments.map(seg => seg.transform(partialFeatSpecsDict)));
+  }
+
+  toString() {
+    return this.segments.toString();
   }
 }
 

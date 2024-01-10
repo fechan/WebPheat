@@ -46,6 +46,11 @@ class Segment {
     return this.#ipa;
   }
 
+  /**
+   * Transform the segment using partial featural specifications dict
+   * @param {Object} partialFeatSpecsDict Partial featural specifications dict
+   * @returns {Segment} Transformed segment with new featural specifications applied
+   */
   transform(partialFeatSpecsDict) {
     const myFeatSpecsDict = this.getFeatSpecs().getDict();
     const newFeatSpecs = new FeaturalSpecifications(
@@ -53,6 +58,10 @@ class Segment {
       { featSpecsDict: {...myFeatSpecsDict, ...partialFeatSpecsDict} }
     );
     return new Segment(this.rawPhoibleData, { featSpecs: newFeatSpecs });
+  }
+
+  toString() {
+    return this.getIpa();
   }
 }
 
