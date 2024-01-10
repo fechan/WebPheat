@@ -89,7 +89,7 @@ class RawPhoibleData {
         searchRangeUpper = searchAt - 1;
       } else {
         let utf8 = new TextEncoder("utf-8");
-        // get the IPA with the fewest diacritics
+        // get the IPA with the fewest diacritics with the same feat spec
         return this.#findIpaWithSameSpecs(searchAt).reduce(
           (best, current) => utf8.encode(best).length < utf8.encode(current).length ? best : current
         );
