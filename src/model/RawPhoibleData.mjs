@@ -3,8 +3,8 @@ import FeaturalSpecifications from "./FeaturalSpecifications.mjs";
 class RawPhoibleData {
   /**
    * Wrapper for accessing the compressed Phoible data
-   * @param {Uint8Array} rawData 
-   * @param {*} metadata 
+   * @param {Uint8Array} rawData Raw feature matrices as bytes
+   * @param {Object} metadata Metadata describing how interpret the raw data, from the corresponding JSON file
    */
   constructor(rawData, metadata) {
     this.rawData = rawData;
@@ -105,7 +105,7 @@ class RawPhoibleData {
    * 
    * According to linguistic theory, IPA and feat specs should be 1-to-1, but
    * PHOIBLE isn't perfect
-   * @param {Number} index Order the segment
+   * @param {Number} index Order the segment appears in the data
    * @returns {String[]} List of matching IPA by featural specifications
    */
   #findIpaWithSameSpecs(index) {
