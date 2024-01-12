@@ -28,8 +28,6 @@ function App() {
     inventory = initialInventory.transform(ruleTransformation);
   }
 
-
-
   useEffect(() => {
     const fetchData = async () => {
       let metadataRes = await fetch(process.env.PUBLIC_URL + "phoible_metadata.json");

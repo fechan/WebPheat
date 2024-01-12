@@ -12,7 +12,7 @@ export default function({ features, inventory, initialInventory }) {
         {
           segments
             .filter(s => s.getFeatSpecs())
-            .map((s, i) => <tr key={ s.getIpa() }>
+            .map((s, i) => <tr key={ i }>
               <td>
                 { initialSegments && initialSegments[i].getIpa() + " ➜ " }
                 { s.getIpa() || "?" }
