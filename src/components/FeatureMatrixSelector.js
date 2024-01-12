@@ -16,8 +16,15 @@ export default function FeatureMatrixSelector({ featureValues, features, onChang
     const isNewRule = parent.dataset.newRule === "true";
     
     if (!isNewRule && (feature === "" || featureValue === "")) { // setting an old rule to a blank
-      const {[prevElemValue]: _, ...newFeatMatrix} = {...featureMatrix};
-      setFeatureMatrix(newFeatMatrix);
+      if (changedField === "feature") {
+        const {[prevElemValue]: _, ...newFeatMatrix} = {...featureMatrix};
+        setFeatureMatrix(newFeatMatrix);
+        onChangeFeatureMatrix(newFeatMatrix);
+      } else {
+        const {[feature]: _, ...newFeatMatrix} = {...featureMatrix};
+        setFeatureMatrix(newFeatMatrix);
+        onChangeFeatureMatrix(newFeatMatrix);
+      }
     } else if ( // finished creating a new rule OR it's an old one and feature value has changed
       (isNewRule && feature && featureValue) ||
       (!isNewRule && changedField === "feature-value")
@@ -25,6 +32,7 @@ export default function FeatureMatrixSelector({ featureValues, features, onChang
       const newFeatMatrix = {...featureMatrix};
       newFeatMatrix[feature] = featureValue;
       setFeatureMatrix(newFeatMatrix);
+      onChangeFeatureMatrix(newFeatMatrix);
 
       if (isNewRule) {
         featureSelector.value = "";
@@ -34,6 +42,7 @@ export default function FeatureMatrixSelector({ featureValues, features, onChang
       const {[prevElemValue]: _, ...newFeatMatrix} = {...featureMatrix};
       newFeatMatrix[feature] = featureValue;
       setFeatureMatrix(newFeatMatrix);
+      onChangeFeatureMatrix(newFeatMatrix);
     }
   }
 
