@@ -5,6 +5,7 @@ import RawPhoibleData from "./model/RawPhoibleData.mjs";
 import Segment from "./model/Segment.mjs";
 import InventorySelector from "./components/InventorySelector";
 import FeatureMatrixSelector from "./components/FeatureMatrixSelector";
+import FeatureTable from "./components/FeatureTable";
 
 function App() {
   let [ phoibleInventories, setPhoibleInventories ] = useState({ "inventories": {}, "dialects": {} });
@@ -14,10 +15,20 @@ function App() {
   let featureValues = rawData ? rawData.featureValues : [];
 
   let [ inventoryInput, setInventoryInput ] = useState("t k s p");
+  let [ ruleFilter, setRuleFilter ] = useState({});
+  let [ ruleTransformation, setRuleTransformation ] = useState({});
+
   let inventory = rawData ? new Inventory(
     inventoryInput.split(" ").map(ipa => new Segment(rawData, { ipa: ipa }))
-  ) : null;
-  let segments = inventory ? inventory.segments : [];
+  ).filter(ruleFilter) : null;
+
+  let initialInventory = null;
+  if (inventory && Object.keys(ruleTransformation).length > 0) {
+    initialInventory = inventory;
+    inventory = initialInventory.transform(ruleTransformation);
+  }
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,28 +59,30 @@ function App() {
         dialects={ phoibleInventories.dialects }
       /> */}
       <input type="text" onChange={ e => setInventoryInput(e.target.value) } value={ inventoryInput } />
-      <FeatureMatrixSelector
-        featureValues={ featureValues }
+
+      <div>
+        <h2>Rule filter</h2>
+        <FeatureMatrixSelector
+          featureValues={ featureValues }
+          features={ features }
+          onChangeFeatureMatrix={ setRuleFilter }
+        />
+      </div>
+
+      <div>
+        <h2>Rule transformation</h2>
+        <FeatureMatrixSelector
+          featureValues={ featureValues }
+          features={ features }
+          onChangeFeatureMatrix={ setRuleTransformation }
+        />
+      </div>
+
+      <FeatureTable
         features={ features }
+        inventory={ inventory }
+        initialInventory={ initialInventory }
       />
-      <table>
-        <thead><tr>
-          <td>Phoneme</td>
-          { features.map(f => <td>{ f }</td>) }</tr>
-        </thead>
-        <tbody>
-          {
-            segments
-              .filter(s => s.getFeatSpecs())
-              .map(s => <tr>
-                <td>{ s.getIpa() }</td>
-                { Object.values(s.getFeatSpecs().getDict()).map(v => <td>
-                  { v === '0' ? ' ' : v}
-                </td>) }
-              </tr>)
-          }
-        </tbody>
-      </table>
     </div>
   );
 }

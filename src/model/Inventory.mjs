@@ -19,6 +19,15 @@ class Inventory {
     return new Inventory(this.segments.map(seg => seg.transform(partialFeatSpecsDict)));
   }
 
+  /**
+   * Filter segments that match the given partial featural specifications
+   * @param {Object} partialFeatSpecsDict Partial featural specifications dict
+   * @returns {Inventory} New filtered inventory
+   */
+  filter(partialFeatSpecsDict) {
+    return new Inventory(this.segments.filter(seg => seg.match(partialFeatSpecsDict)));
+  }
+
   toString() {
     return this.segments.toString();
   }
