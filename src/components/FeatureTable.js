@@ -6,13 +6,13 @@ export default function({ features, inventory, initialInventory }) {
     <table>
       <thead><tr>
         <td>Phoneme</td>
-        { features.map(f => <td>{ f }</td>) }</tr>
+        { features.map(f => <td key={ f }>{ f }</td>) }</tr>
       </thead>
       <tbody>
         {
           segments
             .filter(s => s.getFeatSpecs())
-            .map((s, i) => <tr>
+            .map((s, i) => <tr key={ s.getIpa() }>
               <td>
                 { initialSegments && initialSegments[i].getIpa() + " ➜ " }
                 { s.getIpa() || "?" }
