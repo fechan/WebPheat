@@ -68,7 +68,9 @@ class Segment {
   }
 
   match(partialFeatSpecsDict) {
-    const myFeatSpecsDict = this.getFeatSpecs().getDict();
+    const myFeatSpecsDict = this.getFeatSpecs()?.getDict();
+    if (!myFeatSpecsDict) return false;
+
     for (let [feature, desiredFeatValue] of Object.entries(partialFeatSpecsDict)) {
       if (myFeatSpecsDict[feature] != desiredFeatValue) return false;
     }
