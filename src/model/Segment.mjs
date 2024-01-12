@@ -33,7 +33,7 @@ class Segment {
 
   /**
    * Get the featural specifications of this segment
-   * @returns {FeaturalSpecifications} This segment's featural specifications
+   * @returns {FeaturalSpecifications | null} This segment's featural specifications, null if not found
    */
   getFeatSpecs() {
     if (this.#featSpecs === undefined) { // either ipa or featSpec is defined at all times
@@ -44,7 +44,7 @@ class Segment {
 
   /**
    * Get the IPA of this segment
-   * @returns {String} This segment's IPA
+   * @returns {String | null} This segment's IPA, null if not found
    */
   getIpa() {
     if (this.#ipa === undefined) { // either ipa or featSpec is defined at all times
