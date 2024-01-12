@@ -17,7 +17,6 @@ export default function FeatureMatrixSelector({ featureValues, features, onChang
     
     if (!isNewRule && (feature === "" || featureValue === "")) { // setting an old rule to a blank
       const {[prevElemValue]: _, ...newFeatMatrix} = {...featureMatrix};
-      console.log("a")
       setFeatureMatrix(newFeatMatrix);
     } else if ( // finished creating a new rule OR it's an old one and feature value has changed
       (isNewRule && feature && featureValue) ||
