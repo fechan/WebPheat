@@ -4,12 +4,14 @@ import "./App.css";
 import RawPhoibleData from "./model/RawPhoibleData.mjs";
 import Segment from "./model/Segment.mjs";
 import InventorySelector from "./components/InventorySelector";
+import FeatureMatrixSelector from "./components/FeatureMatrixSelector";
 
 function App() {
   let [ phoibleInventories, setPhoibleInventories ] = useState({ "inventories": {}, "dialects": {} });
 
   let [ rawData, setRawData ] = useState();
   let features = rawData ? rawData.features : [];
+  let featureValues = rawData ? rawData.featureValues : [];
 
   let [ inventoryInput, setInventoryInput ] = useState("t k s p");
   let inventory = rawData ? new Inventory(
@@ -40,12 +42,16 @@ function App() {
 
   return (
     <div className="App">
-      <InventorySelector
+      {/* <InventorySelector
         onClickInventory={ setInventoryInput }
         inventories={ phoibleInventories.inventories }
         dialects={ phoibleInventories.dialects }
-      />
+      /> */}
       <input type="text" onChange={ e => setInventoryInput(e.target.value) } value={ inventoryInput } />
+      <FeatureMatrixSelector
+        featureValues={ featureValues }
+        features={ features }
+      />
       <table>
         <thead><tr>
           <td>Phoneme</td>
