@@ -51,7 +51,7 @@ function App() {
   }, []);
 
   return (
-    <div className="App h-full">
+    <div className="App h-full flex flex-col">
       {/* <InventorySelector
         onClickInventory={ setInventoryInput }
         inventories={ phoibleInventories.inventories }
