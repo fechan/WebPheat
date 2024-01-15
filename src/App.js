@@ -42,6 +42,7 @@ function App() {
 
       setRawData(rawData);
       setPhoibleInventories(phoibleInvs);
+      setInventoryInput(rawData.segmentsIpa.join(" "));
     }
 
     fetchData();
@@ -50,7 +51,7 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className="App h-full">
       {/* <InventorySelector
         onClickInventory={ setInventoryInput }
         inventories={ phoibleInventories.inventories }
