@@ -9,36 +9,23 @@ export default function({ features, inventory, initialInventory }) {
   function Row({ index, style }) {
     const s = segments[index];
 
-    style = {
-      ...style,
-      display: "flex",
-    };
-
-    let cellStyle = {
-      fontSize: '2rem',
-    };
-
-    let headerStyle = {
-      fontSize: '.5rem',
-    };
-
     if ( index === 0 ) {
       return (
         <div style={ style }>
-          <div style={ headerStyle }>Phoneme</div>
-          { features.map(f => <div key={ f } style={ headerStyle }>{ f }</div>) }
+          <div>Phoneme</div>
+          { features.map(f => <div key={ f }>{ f }</div>) }
         </div>
       )
     }
 
     return (
       <div style={ style }>
-        <div style={ cellStyle }>
+        <div>
           { initialSegments && initialSegments[index].getIpa() + " ➜ " }
           { s.getIpa() || "?" }
         </div>
         {
-          Object.values(s.getFeatSpecs().getDict()).map(v => <div style={ cellStyle }>
+          Object.values(s.getFeatSpecs().getDict()).map(v => <div>
             { v === '0' ? ' ' : v}
           </div>)
         }
