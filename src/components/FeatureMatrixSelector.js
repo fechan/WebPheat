@@ -63,7 +63,11 @@ export default function FeatureMatrixSelector({ featureValues, features, onChang
         value={ initialFeature }
       >
         <option value=""></option>
-        { features.toSorted().map(feat => <option value={ feat }>{ feat }</option>) }
+        {
+          features.toSorted().map(feat => <option value={ feat }>
+            { feat.replace(/([A-Z])/g, ' $1').toLowerCase() }
+          </option>)
+        }
       </select>
     </li>;
   }
