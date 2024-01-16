@@ -8,7 +8,7 @@ export default function({ features, inventory, initialInventory }) {
 
   function Cell({ columnIndex, rowIndex, style }) {
     if (rowIndex === 0 && columnIndex === 0) {
-      return <div style={ style }>Phoneme</div>
+      return <div style={ style }>phoneme</div>
     }
 
     if (rowIndex === 0 && columnIndex > 0) {
