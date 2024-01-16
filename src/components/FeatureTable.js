@@ -21,7 +21,8 @@ export default function({ features, inventory, initialInventory }) {
 
     if (columnIndex === 0) {
       return <div style={ style }>
-        { (initialSegments && initialSegments[rowIndex - 1] + "➜") }
+        { ( initialSegments && initialSegments[rowIndex - 1].getIpa() ) }
+        { initialSegments && <span className="mx-1">➜</span> }
         { segments[rowIndex - 1].getIpa() ?? "?" }
       </div>
     }
