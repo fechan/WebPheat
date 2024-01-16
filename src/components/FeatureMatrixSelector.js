@@ -50,6 +50,7 @@ export default function FeatureMatrixSelector({ featureValues, features, onChang
     return <li data-new-rule={ isNewRule } key={ initialFeature }>
       <select
         name="feature-value"
+        className="me-1"
         onChange={ e => onChangeFeatOrValue(e, initialFeatValue) }
         value={ initialFeatValue }
       >

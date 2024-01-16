@@ -59,22 +59,23 @@ function App() {
       /> */}
       <input type="text" onChange={ e => setInventoryInput(e.target.value) } value={ inventoryInput } />
 
-      <div>
-        <h2>Rule filter</h2>
-        <FeatureMatrixSelector
-          featureValues={ featureValues }
-          features={ features }
-          onChangeFeatureMatrix={ setRuleFilter }
-        />
-      </div>
-
-      <div>
-        <h2>Rule transformation</h2>
-        <FeatureMatrixSelector
-          featureValues={ featureValues }
-          features={ features }
-          onChangeFeatureMatrix={ setRuleTransformation }
-        />
+      <div className="flex gap-5 justify-center">
+        <div>
+          <h2>Rule filter</h2>
+          <FeatureMatrixSelector
+            featureValues={ featureValues }
+            features={ features }
+            onChangeFeatureMatrix={ setRuleFilter }
+          />
+        </div>
+        <div>
+          <h2>Rule transformation</h2>
+          <FeatureMatrixSelector
+            featureValues={ featureValues }
+            features={ features }
+            onChangeFeatureMatrix={ setRuleTransformation }
+          />
+        </div>
       </div>
 
       <FeatureTable
