@@ -8,12 +8,14 @@ export default function({ features, inventory, initialInventory }) {
 
   function Cell({ columnIndex, rowIndex, style }) {
     if (rowIndex === 0 && columnIndex === 0) {
-      return <div style={ style }>phoneme</div>
+      return <div style={ style } className="border-b p-2 flex items-end justify-center">
+        <span>phoneme</span>
+      </div>
     }
 
     if (rowIndex === 0 && columnIndex > 0) {
-      return <div style={ style }>
-        { features[columnIndex - 1].replace(/([A-Z])/g, ' $1').toLowerCase() }
+      return <div style={ style } className="border-b p-2 flex items-end justify-center">
+        <span>{ features[columnIndex - 1].replace(/([A-Z])/g, ' $1').toLowerCase() }</span>
       </div>
     }
 
@@ -25,14 +27,16 @@ export default function({ features, inventory, initialInventory }) {
     }
 
     if (columnIndex > 0) {
-      return <div style={ style }>
-        { segments[rowIndex - 1].getFeatSpecs().getDict()[features[columnIndex - 1]] }
+      const featureValue = segments[rowIndex - 1].getFeatSpecs().getDict()[features[columnIndex - 1]];
+      const isZero = featureValue === "0";
+      return <div style={ style } className={ "border-s " + (isZero && "text-gray-300") }>
+        { featureValue }
       </div>
     }
   }
 
-  const rowHeight = (row) => row === 0 ? 45*2 : 45;
-  const columnWidth = (col) => col === 0 ? 100*2 : 100;
+  const rowHeight = (row) => row === 0 ? 45*1.75 : 45;
+  const columnWidth = (col) => col === 0 ? 100*1.5 : 100;
 
   return (
     <div style={{ flex: '1 1 auto' }}>
