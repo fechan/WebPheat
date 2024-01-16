@@ -81,6 +81,7 @@ function App() {
         features={ features }
         inventory={ inventory }
         initialInventory={ initialInventory }
+        ruleTransformation={ ruleTransformation }
       />
     </div>
   );

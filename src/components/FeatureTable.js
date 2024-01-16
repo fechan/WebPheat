@@ -1,7 +1,7 @@
 import { VariableSizeGrid as Grid } from 'react-window';
 import AutoSizer from "react-virtualized-auto-sizer";
 
-export default function({ features, inventory, initialInventory }) {
+export default function({ features, inventory, initialInventory, ruleTransformation }) {
   let segments = inventory?.segments ?? [];
   segments = segments.filter(seg => seg.getFeatSpecs());
   let initialSegments = initialInventory?.segments;
@@ -28,9 +28,16 @@ export default function({ features, inventory, initialInventory }) {
     }
 
     if (columnIndex > 0) {
-      const featureValue = segments[rowIndex - 1].getFeatSpecs().getDict()[features[columnIndex - 1]];
+      const featureName = features[columnIndex - 1];
+      const featureValue = segments[rowIndex - 1].getFeatSpecs().getDict()[featureName];
       const isZero = featureValue === "0";
-      return <div style={ style } className={ "border-s " + (isZero && "text-gray-300") }>
+      return <div
+        style={ style }
+        className={ "border-s " +
+          (isZero ? "text-gray-300" : "") +
+          ((featureName in ruleTransformation) ? "bg-yellow-200" : "")
+        }
+      >
         { featureValue }
       </div>
     }
