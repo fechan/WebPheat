@@ -1,4 +1,4 @@
-import { VariableSizeList as List } from 'react-window';
+import { VariableSizeGrid as Grid } from 'react-window';
 import AutoSizer from "react-virtualized-auto-sizer";
 
 export default function({ features, inventory, initialInventory }) {
@@ -6,53 +6,48 @@ export default function({ features, inventory, initialInventory }) {
   segments = segments.filter(seg => seg.getFeatSpecs());
   let initialSegments = initialInventory?.segments;
 
-  function Row({ index, style }) {
-    const s = segments[index];
-
-    if ( index === 0 ) {
-      return (
-        <div style={ style } className="flex">
-          <div class="w-10 overflow-hidden">
-            <div class="-rotate-90 translate-y-16">Phoneme</div>
-          </div>
-          { features.map(f => <div class="w-10 overflow-hidden">
-            <div key={ f } class="-rotate-90 translate-y-16">{ f }</div>
-          </div>) }
-        </div>
-      )
+  function Cell({ columnIndex, rowIndex, style }) {
+    if (rowIndex === 0 && columnIndex === 0) {
+      return <div style={ style }>Phoneme</div>
     }
 
-    return (
-      <div style={ style } className="flex">
-        <div class="w-8">
-          { initialSegments && initialSegments[index - 1].getIpa() + " ➜ " }
-          { s.getIpa() || "?" }
-        </div>
-        {
-          Object.values(s.getFeatSpecs().getDict()).map(v => (
-            <div class="w-8 border-x">
-              { v === '0' ? '0' : v}
-            </div>
-          ))
-        }
+    if (rowIndex === 0 && columnIndex > 0) {
+      return <div style={ style }>
+        { features[columnIndex - 1].replace(/([A-Z])/g, ' $1').toLowerCase() }
       </div>
-    )
+    }
+
+    if (columnIndex === 0) {
+      return <div style={ style }>
+        { (initialSegments && initialSegments[rowIndex - 1] + "➜") }
+        { segments[rowIndex - 1].getIpa() ?? "?" }
+      </div>
+    }
+
+    if (columnIndex > 0) {
+      return <div style={ style }>
+        { segments[rowIndex - 1].getFeatSpecs().getDict()[features[columnIndex - 1]] }
+      </div>
+    }
   }
 
-  const getItemSize = index => index === 0 ? 100 : 45;
+  const rowHeight = (row) => row === 0 ? 45*2 : 45;
+  const columnWidth = (col) => col === 0 ? 100*2 : 100;
 
   return (
     <div style={{ flex: '1 1 auto' }}>
     <AutoSizer>
       {({ height, width }) => (
-        <List
+        <Grid
           width={ width }
           height={ height }
-          itemCount={ segments.length }
-          itemSize={ getItemSize }
+          columnCount={ features.length + 1 }
+          rowCount={ segments.length + 1 }
+          rowHeight={ rowHeight }
+          columnWidth={ columnWidth }
         >
-          { Row }
-        </List>
+          { Cell }
+        </Grid>
       )}
     </AutoSizer>
     </div>
