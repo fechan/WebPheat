@@ -2,11 +2,8 @@ import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { useState } from "react";
 
-export default function InventorySelector({ show, onClose, inventories, dialects, onClickInventory }) {
+export default function InventorySelector({ onClose, inventories, dialects, onClickInventory }) {
   const [ selectedLangIndex, setSelectedLangIndex ] = useState(0);
-  const [ selectedInvId, setSelectedInvId ] = useState();
-
-  if (!show) return <></>;
   
   const languages = Object.entries(inventories)
     .sort((a, b) => {
@@ -15,6 +12,8 @@ export default function InventorySelector({ show, onClose, inventories, dialects
       return langNameA.localeCompare(langNameB);
     });
   const selectedLanguage = languages[selectedLangIndex];
+
+  const [ selectedInvId, setSelectedInvId ] = useState(Object.keys(selectedLanguage[1])[0]);
   
   function Language({ index, style }) {
     const onClick = () => {

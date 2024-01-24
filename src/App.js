@@ -58,13 +58,14 @@ function App() {
 
   return (
     <div className="App h-full flex flex-col">
-      <InventorySelector
-        show={ showInventorySelect }
-        onClose={ () => setShowInventorySelect(false) }
-        onClickInventory={ setInventoryInput }
-        inventories={ phoibleInventories.inventories }
-        dialects={ phoibleInventories.dialects }
-      />
+      {
+        showInventorySelect && <InventorySelector
+          onClose={ () => setShowInventorySelect(false) }
+          onClickInventory={ setInventoryInput }
+          inventories={ phoibleInventories.inventories }
+          dialects={ phoibleInventories.dialects }
+        />
+      }
 
       <div class="w-full flex flex-col items-center">
         <button
