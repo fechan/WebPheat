@@ -28,6 +28,9 @@ function App() {
     inventory = initialInventory.transform(ruleTransformation);
   }
 
+  let [ showComplex, setShowComplex ] = useState(false);
+  const toggleShowComplex = () => setShowComplex(!showComplex);
+
   useEffect(() => {
     const fetchData = async () => {
       let metadataRes = await fetch(process.env.PUBLIC_URL + "phoible_metadata.json");
@@ -66,6 +69,7 @@ function App() {
             featureValues={ featureValues }
             features={ features }
             onChangeFeatureMatrix={ setRuleFilter }
+            showComplex={ showComplex }
           />
         </div>
         <div>
@@ -74,9 +78,15 @@ function App() {
             featureValues={ featureValues }
             features={ features }
             onChangeFeatureMatrix={ setRuleTransformation }
+            showComplex={ showComplex }
           />
         </div>
       </div>
+
+      <label>
+        <input type="checkbox" checked={ showComplex } onChange={ toggleShowComplex }/>
+        <span class="ms-1">Show complex feature values in rule selectors</span>
+      </label>
 
       <FeatureTable
         features={ features }

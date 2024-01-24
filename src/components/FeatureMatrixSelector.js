@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function FeatureMatrixSelector({ featureValues, features, onChangeFeatureMatrix }) {
+export default function FeatureMatrixSelector({ featureValues, features, onChangeFeatureMatrix, showComplex }) {
   const [ featureMatrix, setFeatureMatrix ] = useState({});
 
   function onChangeFeatOrValue(e, prevElemValue) {
@@ -47,6 +47,8 @@ export default function FeatureMatrixSelector({ featureValues, features, onChang
   }
 
   function singleRuleSelector(isNewRule, initialFeature, initialFeatValue) {
+    const displayedFeatValues = showComplex ? featureValues : featureValues.filter(val => val.length <= 1);
+
     return <li data-new-rule={ isNewRule } key={ initialFeature }>
       <select
         name="feature-value"
@@ -55,7 +57,7 @@ export default function FeatureMatrixSelector({ featureValues, features, onChang
         value={ initialFeatValue }
       >
         <option value=""></option>
-        { featureValues.map(val => <option value={ val }>{ val }</option>) }
+        { displayedFeatValues.map(val => <option value={ val }>{ val }</option>) }
       </select>
 
       <select
