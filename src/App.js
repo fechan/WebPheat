@@ -31,6 +31,8 @@ function App() {
   let [ showComplex, setShowComplex ] = useState(false);
   const toggleShowComplex = () => setShowComplex(!showComplex);
 
+  let [ showInventorySelect, setShowInventorySelect ] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       let metadataRes = await fetch(process.env.PUBLIC_URL + "phoible_metadata.json");
@@ -55,11 +57,16 @@ function App() {
 
   return (
     <div className="App h-full flex flex-col">
-      {/* <InventorySelector
+      <InventorySelector
+        show={ showInventorySelect }
+        onClose={ () => setShowInventorySelect(false) }
         onClickInventory={ setInventoryInput }
         inventories={ phoibleInventories.inventories }
         dialects={ phoibleInventories.dialects }
-      /> */}
+      />
+
+      <button onClick={ () => setShowInventorySelect(true) }>Select inventory</button>
+
       <input type="text" onChange={ e => setInventoryInput(e.target.value) } value={ inventoryInput } />
 
       <div className="flex gap-5 justify-center">
