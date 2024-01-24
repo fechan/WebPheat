@@ -47,12 +47,12 @@ export default function FeatureMatrixSelector({ featureValues, features, onChang
   }
 
   function singleRuleSelector(isNewRule, initialFeature, initialFeatValue) {
-    const displayedFeatValues = showComplex ? featureValues : featureValues.filter(val => val.length <= 1);
+    const displayedFeatValues = showComplex ? featureValues : featureValues.filter(val => val.length <= 1 || val === initialFeatValue);
 
     return <li data-new-rule={ isNewRule } key={ initialFeature }>
       <select
         name="feature-value"
-        className="me-1 p-1 mb-1 text-sm text-gray-900 border border-gray-300 rounded-sm bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+        className="text-center w-16 me-1 p-1 mb-1 text-sm text-gray-900 border border-gray-300 rounded-sm bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
         onChange={ e => onChangeFeatOrValue(e, initialFeatValue) }
         value={ initialFeatValue }
       >
