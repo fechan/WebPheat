@@ -110,31 +110,6 @@ export default function InventorySelector({ show, onClose, inventories, dialects
             </ul>
           </div>
         </main>
-
-        {/* <ul className="p-3 overflow-y-scroll">
-          {
-            Object.entries(inventories)
-              .sort((a, b) => {
-                let [langNameA, langInvsA] = a;
-                let [langNameB, langInvsB] = b;
-                return langNameA.localeCompare(langNameB);
-              })
-              .map(([langName, langInventories], i) => <li>
-                <details>
-                  <summary>{ langName }</summary>
-                  <ul>
-                    {
-                      Object.entries(langInventories).map(([invId, phonemes], i) => {
-                        return <li><button onClick={ () => {onClose(); onClickInventory(phonemes)} }>
-                          { invId }: { dialects[invId] || langName }
-                        </button></li>
-                      })
-                    }
-                  </ul>
-                </details>
-              </li>)
-          }
-        </ul> */}
       </div>
     </div>
   );
