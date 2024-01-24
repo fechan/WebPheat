@@ -51,7 +51,7 @@ export default function InventorySelector({ onClose, inventories, dialects, onCl
           {
             isSelected && <span>
               <a
-                className="text-blue-700 hover:text-blue-500 text-right"
+                className="text-blue-700 hover:text-blue-500 text-right block"
                 href={"https://phoible.org/inventories/view/" + invId}
                 target="_blank"
                 rel="noopener noreferrer"
