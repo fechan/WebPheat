@@ -48,6 +48,7 @@ function App() {
       setRawData(rawData);
       setPhoibleInventories(phoibleInvs);
       setInventoryInput(rawData.segmentsIpa.join(" "));
+      setShowInventorySelect(true);
     }
 
     fetchData();
@@ -65,9 +66,15 @@ function App() {
         dialects={ phoibleInventories.dialects }
       />
 
-      <button onClick={ () => setShowInventorySelect(true) }>Select inventory</button>
-
-      <input type="text" onChange={ e => setInventoryInput(e.target.value) } value={ inventoryInput } />
+      <div class="w-full flex flex-col items-center">
+        <button
+          onClick={ () => setShowInventorySelect(true) }
+          className="my-2 p-2 text-white bg-blue-600 hover:bg-blue-500 focus:ring-2 rounded-md"
+        >
+          Load inventory
+        </button>
+        {/* <input type="text" onChange={ e => setInventoryInput(e.target.value) } value={ inventoryInput } /> */}
+      </div>
 
       <div className="flex gap-5 justify-center">
         <div>
