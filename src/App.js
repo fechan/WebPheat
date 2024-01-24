@@ -6,6 +6,7 @@ import Segment from "./model/Segment.mjs";
 import InventorySelector from "./components/InventorySelector";
 import FeatureMatrixSelector from "./components/FeatureMatrixSelector";
 import FeatureTable from "./components/FeatureTable";
+import logo from "./duck.webp";
 
 function App() {
   let [ phoibleInventories, setPhoibleInventories ] = useState({ "inventories": {}, "dialects": {} });
@@ -67,14 +68,20 @@ function App() {
         />
       }
 
-      <div className="w-full flex flex-col items-center">
+      <div class="p-5 w-1/4 mx-auto flex justify-between">
+        <div class="flex justify-center items-center">
+          <img src={logo} width="64" className="inline me-3"/>
+          <h1 className="text-3xl font-serif">
+            WebPheat
+          </h1>
+        </div>
+
         <button
           onClick={ () => setShowInventorySelect(true) }
-          className="my-2 p-2 text-white bg-blue-600 hover:bg-blue-500 focus:ring-2 rounded-md"
+          className="ms-2 p-2 text-white bg-blue-600 hover:bg-blue-500 focus:ring-2 rounded-md"
         >
           Load inventory
         </button>
-        {/* <input type="text" onChange={ e => setInventoryInput(e.target.value) } value={ inventoryInput } /> */}
       </div>
 
       <div className="flex gap-5 justify-center">
