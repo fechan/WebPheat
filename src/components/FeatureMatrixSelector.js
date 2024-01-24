@@ -52,7 +52,7 @@ export default function FeatureMatrixSelector({ featureValues, features, onChang
     return <li data-new-rule={ isNewRule } key={ initialFeature }>
       <select
         name="feature-value"
-        className="me-1"
+        className="me-1 p-1 mb-1 text-sm text-gray-900 border border-gray-300 rounded-sm bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
         onChange={ e => onChangeFeatOrValue(e, initialFeatValue) }
         value={ initialFeatValue }
       >
@@ -62,6 +62,7 @@ export default function FeatureMatrixSelector({ featureValues, features, onChang
 
       <select
         name="feature"
+        className="p-1 mb-1 text-sm text-gray-900 border border-gray-300 rounded-sm bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
         onChange={ e => onChangeFeatOrValue(e, initialFeature) }
         value={ initialFeature }
       >
