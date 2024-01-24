@@ -45,7 +45,21 @@ export default function InventorySelector({ show, onClose, inventories, dialects
       onClick={ () => setSelectedInvId(invId) }
     >
       <div>
-        <div className="font-bold">Inventory { invId }: { dialects[invId] || selectedLanguage[0] }</div>
+        <div className="flex justify-between mb-1">
+          <span class="font-bold">Inventory { invId }: { dialects[invId] || selectedLanguage[0] }</span>
+          {
+            isSelected && <span>
+              <a
+                className="text-blue-700 hover:text-blue-500"
+                href={"https://phoible.org/inventories/view/" + invId}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View on Phoible →
+              </a>
+            </span>
+          }
+        </div>
         <p className="text-gray-500">{ isSelected && phonemes }</p>
       </div>
 
