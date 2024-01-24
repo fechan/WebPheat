@@ -59,7 +59,7 @@ function App() {
   return (
     <div className="App h-full flex flex-col">
       {
-        showInventorySelect && <InventorySelector
+        showInventorySelect && rawData && <InventorySelector
           onClose={ () => setShowInventorySelect(false) }
           onClickInventory={ setInventoryInput }
           inventories={ phoibleInventories.inventories }
