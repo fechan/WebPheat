@@ -67,7 +67,7 @@ function App() {
         />
       }
 
-      <div class="w-full flex flex-col items-center">
+      <div className="w-full flex flex-col items-center">
         <button
           onClick={ () => setShowInventorySelect(true) }
           className="my-2 p-2 text-white bg-blue-600 hover:bg-blue-500 focus:ring-2 rounded-md"
@@ -100,7 +100,7 @@ function App() {
 
       <label>
         <input type="checkbox" checked={ showComplex } onChange={ toggleShowComplex }/>
-        <span class="ms-1">Show complex feature values in rule selectors</span>
+        <span className="ms-1">Show complex feature values in rule selectors</span>
       </label>
 
       <FeatureTable

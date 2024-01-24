@@ -42,12 +42,13 @@ export default function InventorySelector({ onClose, inventories, dialects, onCl
     }
 
     return <li
+      key={ invId }
       className={ "p-2 hover:bg-gray-100 " + ( isSelected && "!bg-blue-100")}
       onClick={ () => setSelectedInvId(invId) }
     >
       <div>
         <div className="flex justify-between mb-1">
-          <span class="font-bold">Inventory { invId }: { dialects[invId] || selectedLanguage[0] }</span>
+          <span className="font-bold">Inventory { invId }: { dialects[invId] || selectedLanguage[0] }</span>
           {
             isSelected && <span>
               <a
@@ -79,7 +80,7 @@ export default function InventorySelector({ onClose, inventories, dialects, onCl
     <div className="text-start fixed left-0 top-0 z-[1055] h-full w-full overflow-x-hidden outline-none flex items-center justify-center bg-black/50">
       <div className="bg-white w-9/12 h-5/6 flex flex-col ">
         <header className="p-4 flex justify-between border-b">
-          <h2 class="text-xl font-bold">Load an inventory from a language</h2>
+          <h2 className="text-xl font-bold">Load an inventory from a language</h2>
           <button
             onClick={ onClose }
             className="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
@@ -88,18 +89,18 @@ export default function InventorySelector({ onClose, inventories, dialects, onCl
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
+              strokeWidth="1.5"
               stroke="currentColor"
-              class="h-6 w-6">
+              className="h-6 w-6">
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </header>
 
-        <main class="p-4 flex flex-col w-full h-full">
+        <main className="p-4 flex flex-col w-full h-full">
           <label className="mb-3">
             Search
             <input
@@ -112,7 +113,7 @@ export default function InventorySelector({ onClose, inventories, dialects, onCl
           <section className="grid grid-cols-2 gap-3 h-full">
             <div className="flex w-full flex-col">
               <h3 className="text-xl font-bold mb-4">Language</h3>
-              <div class="p-2 w-full h-full border">
+              <div className="p-2 w-full h-full border">
                 <AutoSizer>
                   {({ height, width }) => (
                     <List
@@ -130,7 +131,7 @@ export default function InventorySelector({ onClose, inventories, dialects, onCl
 
             <div className="flex flex-col">
               <h3 className="text-xl font-bold mb-4">Inventory</h3>
-              <ul class="p-3 border rounded-sm h-full">
+              <ul className="p-3 border rounded-sm h-full">
                 { Object.entries(selectedLanguage ? selectedLanguage[1] : []).map(Inventory) }
               </ul>
             </div>
