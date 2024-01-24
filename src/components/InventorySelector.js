@@ -3,9 +3,11 @@ import AutoSizer from "react-virtualized-auto-sizer";
 import { useState } from "react";
 
 export default function InventorySelector({ onClose, inventories, dialects, onClickInventory }) {
+  const [ searchTerm, setSearchTerm ] = useState("");
   const [ selectedLangIndex, setSelectedLangIndex ] = useState(0);
   
   const languages = Object.entries(inventories)
+    .filter(([langName, langInvs]) => langName.toLowerCase().includes(searchTerm.toLowerCase()) )
     .sort((a, b) => {
       let [langNameA, langInvsA] = a;
       let [langNameB, langInvsB] = b;
@@ -13,7 +15,7 @@ export default function InventorySelector({ onClose, inventories, dialects, onCl
     });
   const selectedLanguage = languages[selectedLangIndex];
 
-  const [ selectedInvId, setSelectedInvId ] = useState(Object.keys(selectedLanguage[1])[0]);
+  const [ selectedInvId, setSelectedInvId ] = useState(selectedLanguage && Object.keys(selectedLanguage[1])[0]);
   
   function Language({ index, style }) {
     const onClick = () => {
@@ -49,7 +51,7 @@ export default function InventorySelector({ onClose, inventories, dialects, onCl
           {
             isSelected && <span>
               <a
-                className="text-blue-700 hover:text-blue-500"
+                className="text-blue-700 hover:text-blue-500 text-right"
                 href={"https://phoible.org/inventories/view/" + invId}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -97,31 +99,42 @@ export default function InventorySelector({ onClose, inventories, dialects, onCl
           </button>
         </header>
 
-        <main class="p-4 grid grid-cols-2 w-full h-full gap-3">
-          <div className="flex w-full flex-col">
-            <h3 className="text-xl font-bold mb-4">Language</h3>
-            <div class="p-2 w-full h-full border">
-              <AutoSizer>
-                {({ height, width }) => (
-                  <List
-                    height={ height }
-                    width={ width }
-                    itemCount={ languages.length }
-                    itemSize={ 40 }
-                  >
-                    { Language }
-                  </List>
-                )}
-              </AutoSizer>
+        <main class="p-4 flex flex-col w-full h-full">
+          <label className="mb-3">
+            Search
+            <input
+              className="bg-gray-50 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 w-full rounded-md h-10 p-3"
+              onChange={ e => setSearchTerm(e.target.value) }
+            >
+            </input>
+          </label>
+          
+          <section className="grid grid-cols-2 gap-3 h-full">
+            <div className="flex w-full flex-col">
+              <h3 className="text-xl font-bold mb-4">Language</h3>
+              <div class="p-2 w-full h-full border">
+                <AutoSizer>
+                  {({ height, width }) => (
+                    <List
+                      height={ height }
+                      width={ width }
+                      itemCount={ languages.length }
+                      itemSize={ 40 }
+                    >
+                      { Language }
+                    </List>
+                  )}
+                </AutoSizer>
+              </div>
             </div>
-          </div>
 
-          <div className="flex flex-col">
-            <h3 className="text-xl font-bold mb-4">Inventory</h3>
-            <ul class="p-3 border rounded-sm h-full">
-              { Object.entries(selectedLanguage[1]).map(Inventory) }
-            </ul>
-          </div>
+            <div className="flex flex-col">
+              <h3 className="text-xl font-bold mb-4">Inventory</h3>
+              <ul class="p-3 border rounded-sm h-full">
+                { Object.entries(selectedLanguage ? selectedLanguage[1] : []).map(Inventory) }
+              </ul>
+            </div>
+          </section>
         </main>
       </div>
     </div>
