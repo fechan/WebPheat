@@ -13,10 +13,11 @@ class Inventory {
    * Transform all phonemes in this inventory according to partial featural
    * specifications
    * @param {Object} partialFeatSpecsDict Partial featural specifications dict
+   * @param {Object} ruleFilter Rule filter, for resolving Greek variables in alpha notation
    * @returns {Inventory} New transformed inventory
    */
-  transform(partialFeatSpecsDict) {
-    return new Inventory(this.segments.map(seg => seg.transform(partialFeatSpecsDict)));
+  transform(partialFeatSpecsDict, ruleFilter) {
+    return new Inventory(this.segments.map(seg => seg.transform(partialFeatSpecsDict, ruleFilter)));
   }
 
   /**

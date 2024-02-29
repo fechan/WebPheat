@@ -26,7 +26,7 @@ function App() {
   let initialInventory = null;
   if (inventory && Object.keys(ruleTransformation).length > 0) {
     initialInventory = inventory;
-    inventory = initialInventory.transform(ruleTransformation);
+    inventory = initialInventory.transform(ruleTransformation, ruleFilter);
   }
 
   let [ showComplex, setShowComplex ] = useState(false);

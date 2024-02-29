@@ -47,7 +47,10 @@ export default function FeatureMatrixSelector({ featureValues, features, onChang
   }
 
   function singleRuleSelector(isNewRule, initialFeature, initialFeatValue) {
-    const displayedFeatValues = showComplex ? featureValues : featureValues.filter(val => val.length <= 1 || val === initialFeatValue);
+    let displayedFeatValues = showComplex ? featureValues : featureValues.filter(val => val.length <= 1 || val === initialFeatValue);
+
+    displayedFeatValues = displayedFeatValues.concat("αβγδϵζηθικλμνξοπρστυϕχψω".split(""));
+    displayedFeatValues = displayedFeatValues.concat("αβγδϵζηθικλμνξοπρστυϕχψω".split("").map(letter => "-" + letter));
 
     return <li data-new-rule={ isNewRule } key={ initialFeature }>
       <select

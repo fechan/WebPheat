@@ -54,15 +54,46 @@ class Segment {
   }
 
   /**
+   * Check if the given feature value is a Greek variable
+   * @note A feature value is a Greek variable if the last character is in the
+   * Greek lowercase alphabet
+   * @param {String} featValue Feature value to check
+   * @returns {Boolean} True if yes
+   */
+  isGreekVariable(featValue) {
+    const greekLetters = "αβγδϵζηθικλμνξοπρστυϕχψω";
+    return greekLetters.indexOf(featValue.charAt(featValue.length - 1)) > -1;
+  }
+
+  /**
    * Transform the segment using partial featural specifications dict
    * @param {Object} partialFeatSpecsDict Partial featural specifications dict
+   * @param {Object} ruleFilter Rule filter, for resolving Greek variables in alpha notation
    * @returns {Segment} Transformed segment with new featural specifications applied
    */
-  transform(partialFeatSpecsDict) {
+  transform(partialFeatSpecsDict, ruleFilter) {
     const myFeatSpecsDict = this.getFeatSpecs().getDict();
+    
+    const variableValues = {};
+    // figure out which feature value should be assigned to each Greek variable
+    for (let [feature, featValue] of Object.entries(ruleFilter)) {
+      if (this.isGreekVariable(featValue)) {
+        variableValues[featValue] = myFeatSpecsDict[feature];
+      }
+    }
+    // rewrite any variables in the transformation feat specs with their true values according to variableValues
+    const antonyms = {"-": "+", "+": "-", "0": "0"}; // for variable feature values with minus signs in front (like -α)
+    const partialFeatSpecsDictNoVars = {...partialFeatSpecsDict};
+    for (let [feature, featValue] of Object.entries(partialFeatSpecsDictNoVars)) {
+      if (this.isGreekVariable(featValue)) {
+        const trueValue = featValue.startsWith("-") ? antonyms[variableValues[featValue.slice(1)]] : variableValues[featValue];
+        partialFeatSpecsDictNoVars[feature] = trueValue;
+      }
+    }
+
     const newFeatSpecs = new FeaturalSpecifications(
       this.rawPhoibleData,
-      { featSpecsDict: {...myFeatSpecsDict, ...partialFeatSpecsDict} }
+      { featSpecsDict: {...myFeatSpecsDict, ...partialFeatSpecsDictNoVars} }
     );
     return new Segment(this.rawPhoibleData, { featSpecs: newFeatSpecs });
   }
@@ -72,7 +103,7 @@ class Segment {
     if (!myFeatSpecsDict) return false;
 
     for (let [feature, desiredFeatValue] of Object.entries(partialFeatSpecsDict)) {
-      if (myFeatSpecsDict[feature] != desiredFeatValue) return false;
+      if (!this.isGreekVariable(desiredFeatValue) && myFeatSpecsDict[feature] !== desiredFeatValue) return false;
     }
     return true;
   }
