@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function FeatureMatrixSelector({ featureValues, features, onChangeFeatureMatrix, showComplex }) {
+export default function FeatureMatrixSelector({ featureValues, features, onChangeFeatureMatrix, showComplex, showExtraVariables=false, showNegativeVariables=false }) {
   const [ featureMatrix, setFeatureMatrix ] = useState({});
 
   function onChangeFeatOrValue(e, prevElemValue) {
@@ -49,8 +49,11 @@ export default function FeatureMatrixSelector({ featureValues, features, onChang
   function singleRuleSelector(isNewRule, initialFeature, initialFeatValue) {
     let displayedFeatValues = showComplex ? featureValues : featureValues.filter(val => val.length <= 1 || val === initialFeatValue);
 
-    displayedFeatValues = displayedFeatValues.concat("αβγδϵζηθικλμνξοπρστυϕχψω".split(""));
-    displayedFeatValues = displayedFeatValues.concat("αβγδϵζηθικλμνξοπρστυϕχψω".split("").map(letter => "-" + letter));
+    const greekLetters = showExtraVariables ? "αβγδϵζηθικλμνξοπρστυϕχψω".split("") : "αβγ".split("");
+    displayedFeatValues = displayedFeatValues.concat(greekLetters);
+    if (showNegativeVariables) {
+      displayedFeatValues = displayedFeatValues.concat(greekLetters.map(letter => "-" + letter));
+    }
 
     return <li data-new-rule={ isNewRule } key={ initialFeature }>
       <select

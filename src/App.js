@@ -31,6 +31,8 @@ function App() {
 
   let [ showComplex, setShowComplex ] = useState(false);
   const toggleShowComplex = () => setShowComplex(!showComplex);
+  let [ showExtraVariables, setShowExtraVariables ] = useState(false);
+  const toggleShowExtraVariables = () => setShowExtraVariables(!showExtraVariables);
 
   let [ showInventorySelect, setShowInventorySelect ] = useState(false);
 
@@ -92,6 +94,7 @@ function App() {
             features={ features }
             onChangeFeatureMatrix={ setRuleFilter }
             showComplex={ showComplex }
+            showExtraVariables={ showExtraVariables }
           />
         </div>
         <div>
@@ -101,14 +104,24 @@ function App() {
             features={ features }
             onChangeFeatureMatrix={ setRuleTransformation }
             showComplex={ showComplex }
+            showNegativeVariables={ true }
+            showExtraVariables={ showExtraVariables }
           />
         </div>
       </div>
 
-      <label>
-        <input type="checkbox" checked={ showComplex } onChange={ toggleShowComplex }/>
-        <span className="ms-1">Show complex feature values in rule selectors</span>
-      </label>
+      <div class="flex justify-center">
+        <fieldset className="flex flex-col gap-1 text-left">
+          <label>
+            <input type="checkbox" checked={ showComplex } onChange={ toggleShowComplex }/>
+            <span className="ms-1">Show complex feature values in rule selectors</span>
+          </label>
+          <label>
+            <input type="checkbox" checked={ showExtraVariables } onChange={ toggleShowExtraVariables }/>
+            <span className="ms-1">Show more alpha notation variables in rule selectors</span>
+          </label>
+        </fieldset>
+      </div>
 
       <FeatureTable
         features={ features }
