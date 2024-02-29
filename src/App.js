@@ -70,9 +70,9 @@ function App() {
         />
       }
 
-      <div class="p-5 w-1/4 mx-auto flex justify-between">
+      <div class="p-5 mx-auto flex justify-between gap-3">
         <div class="flex justify-center items-center">
-          <img src={logo} width="64" className="inline me-3"/>
+          <img src={logo} width="64" className="inline me-3" alt="The WebPheat logo, featuring a duck"/>
           <h1 className="text-3xl font-serif">
             WebPheat
           </h1>
