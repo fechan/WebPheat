@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+@font-face {
+  font-family: 'Charis SIL';
+  src: local("Charis SIL"), url(./fonts/Charis\ SIL/CharisSIL-Regular.ttf) format('ttf');
+}
+
+.feature-cell {
+  font-family: 'Charis SIL', serif;
+}

@@ -20,7 +20,7 @@ export default function({ features, inventory, initialInventory, ruleTransformat
     }
 
     if (columnIndex === 0) {
-      return <div style={ style }>
+      return <div style={ style } className="feature-cell text-2xl">
         { ( initialSegments && initialSegments[rowIndex - 1].getIpa() ) }
         { initialSegments && <span className="mx-1">➜</span> }
         { segments[rowIndex - 1].getIpa() ?? "?" }
@@ -33,7 +33,7 @@ export default function({ features, inventory, initialInventory, ruleTransformat
       const isZero = featureValue === "0";
       return <div
         style={ style }
-        className={ "border-s " +
+        className={ "feature-cell text-2xl border-s " +
           (isZero ? "text-gray-300" : "") +
           ((featureName in ruleTransformation) ? "bg-yellow-200" : "")
         }
