@@ -27,7 +27,7 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
   function PhonemeCell({ index, style }) {
     return <div style={ style } className="feature-cell text-2xl border-e">
       { ( initialSegments && initialSegments[index].getIpa() ) }
-      { initialSegments && <span className="mx-1">➜</span> }
+      { initialSegments && <span className="mx-1">→</span> }
       { segments[index].getIpa() ?? "?" }
     </div>
   }
