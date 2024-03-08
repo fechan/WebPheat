@@ -15,9 +15,9 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
     const isZero = featureValue === "0";
     return <div
       style={ style }
-      className={ "feature-cell border-e  " +
-        (isZero ? "text-gray-300" : "") +
-        ((featureName in ruleTransformation) ? "bg-yellow-200" : "")
+      className={ "feature-cell border-e " +
+        (isZero ? "text-gray-300 " : "") +
+        ((featureName in ruleTransformation) ? "bg-yellow-200 " : "")
       }
     >
       { featureValue.replace("-", "−") /* replaces dashes with minus sign */ }
@@ -25,10 +25,16 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
   }
 
   function PhonemeCell({ index, style }) {
-    return <div style={ style } className="feature-cell text-2xl border-e">
+    const ipa = segments[index].getIpa();
+    return <div
+      style={ style }
+      className={ "feature-cell text-2xl border-e " +
+        (ipa ? "" : "bg-red-200 ")
+      }
+    >
       { ( initialSegments && initialSegments[index].getIpa() ) }
       { initialSegments && <span className="mx-1">→</span> }
-      { segments[index].getIpa() ?? "?" }
+      { ipa ?? "?" }
     </div>
   }
 
