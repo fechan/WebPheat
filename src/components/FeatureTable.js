@@ -20,7 +20,7 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
         ((featureName in ruleTransformation) ? "bg-yellow-200 " : "")
       }
     >
-      { featureValue.replace("-", "−") /* replaces dashes with minus sign */ }
+      { featureValue?.replace("-", "−") /* replaces dashes with minus sign */ }
     </div>
   }
 
@@ -33,7 +33,7 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
       }
     >
       { ( initialSegments && initialSegments[index].getIpa() ) }
-      { initialSegments && <span className="mx-1">→</span> }
+      { initialSegments && <span className="mx-1 text-sm">→</span> }
       { ipa ?? "?" }
     </div>
   }
