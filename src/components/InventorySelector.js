@@ -18,8 +18,8 @@ export default function InventorySelector({ inventories, dialects, onClose, onCl
   const languages = Object.entries(inventories)
     .filter(([langName, _]) => langName.toLowerCase().includes(searchTerm.toLowerCase()) )
     .sort((a, b) => {
-      let [langNameA, _] = a;
-      let [langNameB, _] = b;
+      let [langNameA] = a;
+      let [langNameB] = b;
       return langNameA.localeCompare(langNameB);
     });
   const selectedLanguage = languages[selectedLangIndex];
