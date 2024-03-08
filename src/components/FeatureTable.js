@@ -9,7 +9,7 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
 
   let featuresSorted = features.toSorted()
 
-  function Cell({ columnIndex, rowIndex, style }) {
+  function FeatureValueCell({ columnIndex, rowIndex, style }) {
     const featureName = featuresSorted[columnIndex];
     const featureValue = segments[rowIndex].getFeatSpecs().getDict()[featureName];
     const isZero = featureValue === "0";
@@ -24,7 +24,7 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
     </div>
   }
 
-  function PhonemeRow({ index, style }) {
+  function PhonemeCell({ index, style }) {
     return <div style={ style } className="feature-cell text-2xl border-e">
       { ( initialSegments && initialSegments[index].getIpa() ) }
       { initialSegments && <span className="mx-1">➜</span> }
@@ -66,7 +66,7 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
                   featMatrixRef.current.scrollTo({scrollTop: scrollOffset});
               }}
             >
-              { PhonemeRow }
+              { PhonemeCell }
             </List>)}
           </AutoSizer>
         </div>
@@ -113,7 +113,7 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
                     phonemeColRef.current.scrollTo(scrollTop);
                 }}
               >
-                { Cell }
+                { FeatureValueCell }
               </Grid>
             )}
           </AutoSizer>
