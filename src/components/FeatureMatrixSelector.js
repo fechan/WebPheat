@@ -1,5 +1,15 @@
 import { useState } from "react";
 
+/**
+ * A user-editable distinctive feature matrix
+ * @param {Object} props React props
+ * @param {Object} props.featureValues Object mapping feature names to feature values
+ * @param {(newFeatMatrix: Object) => void} props.onChangeFeatureMatrix Callback run when the feature matrix changes
+ * @param {Boolean} props.showComplex True if complex (e.g. affricate) feature values should be shown in the value dropdowns
+ * @param {Boolean} [props.showExtraVariables=false] True if extra alpha notation variables should be shown in the value dropdowns
+ * @param {Boolean} [props.showNegativeVariables=false] True if negative versions of alpha notation variables should be shown in the value dropdowns
+ * @returns Feature matrix selector
+ */
 export default function FeatureMatrixSelector({ featureValues, features, onChangeFeatureMatrix, showComplex, showExtraVariables=false, showNegativeVariables=false }) {
   const [ featureMatrix, setFeatureMatrix ] = useState({});
 

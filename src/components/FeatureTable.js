@@ -2,6 +2,15 @@ import { FixedSizeGrid as Grid, FixedSizeList as List } from 'react-window';
 import AutoSizer from "react-virtualized-auto-sizer";
 import { useRef } from 'react';
 
+/**
+ * A table of distinctive features for the phonemes in a given inventory
+ * @param {Object} props React props
+ * @param {String[]} props.features List of features to show
+ * @param {Object} props.inventory A phonemic inventory, which may be a result of a transformation due to a phonetic rule
+ * @param {Object} [props.initialInventory] The phonemic inventory corresponding to `inventory` before transformation. Null if there is no transformation
+ * @param {Object} [props.ruleTransformation] The transformation part of a phonetic rule. Maps transformed feature names to their new values
+ * @returns Feature table
+ */
 export default function FeatureTable({ features, inventory, initialInventory, ruleTransformation }) {
   let segments = inventory?.segments ?? [];
   segments = segments.filter(seg => seg.getFeatSpecs());

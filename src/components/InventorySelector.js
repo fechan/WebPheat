@@ -2,7 +2,16 @@ import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { useState } from "react";
 
-export default function InventorySelector({ onClose, inventories, dialects, onClickInventory }) {
+/**
+ * A modal that allows the user to select a phonemic inventory to load
+ * @param {Object} props React props
+ * @param {Object} props.inventories Object mapping language names to lists of associated inventories
+ * @param {Object} props.dialects Object mapping Inventory IDs to dialect names, if they are different from the language name
+ * @param {() => void} props.onClose Callback run when inventory selector is closed
+ * @param {(phonemes: String) => void} props.onClickInventory Callback to run when an inventory is selected
+ * @returns Inventory selector
+ */
+export default function InventorySelector({ inventories, dialects, onClose, onClickInventory }) {
   const [ searchTerm, setSearchTerm ] = useState("");
   const [ selectedLangIndex, setSelectedLangIndex ] = useState(0);
   
