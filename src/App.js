@@ -38,14 +38,14 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      let metadataRes = await fetch(process.env.PUBLIC_URL + "phoible_metadata.json");
+      let metadataRes = await fetch(process.env.PUBLIC_URL + "/phoible_metadata.json");
       let metadata = await metadataRes.json();
 
-      let featMatrixRes = await fetch(process.env.PUBLIC_URL + "phoible_feature_matrix.bin");
+      let featMatrixRes = await fetch(process.env.PUBLIC_URL + "/phoible_feature_matrix.bin");
       let featMatrixBuf = await featMatrixRes.arrayBuffer();
       let rawData = new RawPhoibleData(new Uint8Array(featMatrixBuf), metadata);
 
-      let phoibleInvsRes = await fetch(process.env.PUBLIC_URL + "phoible_invs.json");
+      let phoibleInvsRes = await fetch(process.env.PUBLIC_URL + "/phoible_invs.json");
       let phoibleInvs = await phoibleInvsRes.json();
 
       setRawData(rawData);
