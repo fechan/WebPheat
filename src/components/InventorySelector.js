@@ -100,7 +100,7 @@ export default function InventorySelector({ onClose, inventories, dialects, onCl
           </button>
         </header>
 
-        <main className="p-4 flex flex-col w-full h-full">
+        <main className="p-4 flex flex-col w-full h-full overflow-y-auto">
           <label className="mb-3">
             Search
             <input
