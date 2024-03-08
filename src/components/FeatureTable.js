@@ -1,4 +1,4 @@
-import { VariableSizeGrid as Grid, FixedSizeList } from 'react-window';
+import { FixedSizeGrid as Grid, FixedSizeList as List } from 'react-window';
 import AutoSizer from "react-virtualized-auto-sizer";
 import { useRef } from 'react';
 
@@ -38,27 +38,34 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
         <span>{ features[index].replace(/([A-Z])/g, ' $1').toLowerCase() }</span>
     </div>
   }
-  const rowHeight = (row) => 45;
-  const columnWidth = (col) => 100;
 
   const featureHeaderRef = useRef(null);
   const phonemeColRef = useRef(null);
+  const featMatrixRef = useRef(null);
 
   return (
     <div className="flex flex-auto">
       <div className="grid [grid-template-rows:80px_1fr]">
-        <div className="[width:150px] [height:80px]">phoneme</div>
+        <div className="[width:150px] [height:80px] border-b p-2 flex items-end justify-center">
+          <span>phoneme</span>
+        </div>
+
         <div>
           <AutoSizer disableWidth>
-            {({height})=>(<FixedSizeList
+            {({height})=>(<List
+              className="[scrollbar-width:none]"
               ref={ phonemeColRef }
               width={ 150 }
               height={ height }
               itemCount={ segments.length }
               itemSize={ 45 }
+              onScroll={({ scrollOffset }) => {
+                if (featMatrixRef.current)
+                  featMatrixRef.current.scrollTo({scrollTop: scrollOffset});
+              }}
             >
               { PhonemeRow }
-            </FixedSizeList>)}
+            </List>)}
           </AutoSizer>
         </div>
       </div>
@@ -67,29 +74,36 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
         <div>
           <AutoSizer disableHeight>
             {({ width }) => (
-              <FixedSizeList
+              <List
+                className="[scrollbar-width:none]"
                 ref={ featureHeaderRef }
                 width={ width }
                 height={ 80 }
                 itemCount={ features.length }
                 itemSize={ 100 }
                 layout="horizontal"
+                onScroll={({ scrollOffset }) => {
+                  if (featMatrixRef.current)
+                    featMatrixRef.current.scrollTo({scrollLeft: scrollOffset});
+                }}
               >
                 { FeatureColHeader }
-              </FixedSizeList>
+              </List>
             )}
           </AutoSizer>
         </div>
+
         <div className="flex-auto">
           <AutoSizer>
             {({ height, width }) => (
               <Grid
+                ref={ featMatrixRef }
                 width={ width }
                 height={ height }
                 columnCount={ features.length }
                 rowCount={ segments.length }
-                rowHeight={ rowHeight }
-                columnWidth={ columnWidth }
+                rowHeight={ 45 }
+                columnWidth={ 100 }
                 onScroll={({ scrollLeft, scrollTop }) => {
                   if (featureHeaderRef.current)
                     featureHeaderRef.current.scrollTo(scrollLeft);
