@@ -13,7 +13,7 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
     const isZero = featureValue === "0";
     return <div
       style={ style }
-      className={ "feature-cell  " +
+      className={ "feature-cell border-e  " +
         (isZero ? "text-gray-300" : "") +
         ((featureName in ruleTransformation) ? "bg-yellow-200" : "")
       }
@@ -23,7 +23,7 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
   }
 
   function PhonemeRow({ index, style }) {
-    return <div style={ style } className="feature-cell text-2xl">
+    return <div style={ style } className="feature-cell text-2xl border-e">
       { ( initialSegments && initialSegments[index].getIpa() ) }
       { initialSegments && <span className="mx-1">➜</span> }
       { segments[index].getIpa() ?? "?" }
@@ -46,7 +46,7 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
   return (
     <div className="flex flex-auto">
       <div className="grid [grid-template-rows:80px_1fr]">
-        <div className="[width:150px] [height:80px] border-b p-2 flex items-end justify-center">
+        <div className="[width:150px] [height:80px] border-b border-e p-2 flex items-end justify-center">
           <span>phoneme</span>
         </div>
 
