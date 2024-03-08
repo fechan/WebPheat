@@ -7,8 +7,10 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
   segments = segments.filter(seg => seg.getFeatSpecs());
   let initialSegments = initialInventory?.segments;
 
+  let featuresSorted = features.toSorted()
+
   function Cell({ columnIndex, rowIndex, style }) {
-    const featureName = features[columnIndex];
+    const featureName = featuresSorted[columnIndex];
     const featureValue = segments[rowIndex].getFeatSpecs().getDict()[featureName];
     const isZero = featureValue === "0";
     return <div
@@ -18,7 +20,7 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
         ((featureName in ruleTransformation) ? "bg-yellow-200" : "")
       }
     >
-      { featureValue }
+      { featureValue.replace("-", "−") /* replaces dashes with minus sign */ }
     </div>
   }
 
@@ -35,7 +37,7 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
       className="border-b p-2 flex items-end justify-center"
       style={ style }
     >
-        <span>{ features[index].replace(/([A-Z])/g, ' $1').toLowerCase() }</span>
+        <span>{ featuresSorted[index].replace(/([A-Z])/g, ' $1').toLowerCase() }</span>
     </div>
   }
 
