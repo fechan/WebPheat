@@ -56,42 +56,47 @@ export default function({ features, inventory, initialInventory, ruleTransformat
   const featureHeaderRef = useRef(null);
 
   return (
-    <div className="flex flex-col" style={{ flex: '1 1 auto' }}>
-      <div>
-        <AutoSizer disableHeight>
-          {({ width }) => (
-            <FixedSizeList
-              ref={featureHeaderRef}
-              width={ width }
-              height={ 45*1.75 }
-              itemCount={ features.length }
-              itemSize ={ 100 }
-              layout="horizontal"
-            >
-              { FeatureColHeader }
-            </FixedSizeList>
-          )}
-        </AutoSizer>
+    <div className="flex flex-auto">
+      <div className="bg-red-100">
+        phonemes
       </div>
-      <div style={{ flex: '1 1 auto' }}>
-        <AutoSizer>
-          {({ height, width }) => (
-            <Grid
-              width={ width }
-              height={ height }
-              columnCount={ features.length + 1 }
-              rowCount={ segments.length + 1 }
-              rowHeight={ rowHeight }
-              columnWidth={ columnWidth }
-              onScroll={({ scrollLeft, scrollTop }) => {
-                if (featureHeaderRef.current)
-                  featureHeaderRef.current.scrollTo(scrollLeft);
-              }}
-            >
-              { Cell }
-            </Grid>
-          )}
-        </AutoSizer>
+      <div className="flex flex-col flex-auto">
+        <div>
+          <AutoSizer disableHeight>
+            {({ width }) => (
+              <FixedSizeList
+                ref={featureHeaderRef}
+                width={ width }
+                height={ 45*1.75 }
+                itemCount={ features.length }
+                itemSize ={ 100 }
+                layout="horizontal"
+              >
+                { FeatureColHeader }
+              </FixedSizeList>
+            )}
+          </AutoSizer>
+        </div>
+        <div className="flex-auto">
+          <AutoSizer>
+            {({ height, width }) => (
+              <Grid
+                width={ width }
+                height={ height }
+                columnCount={ features.length + 1 }
+                rowCount={ segments.length + 1 }
+                rowHeight={ rowHeight }
+                columnWidth={ columnWidth }
+                onScroll={({ scrollLeft, scrollTop }) => {
+                  if (featureHeaderRef.current)
+                    featureHeaderRef.current.scrollTo(scrollLeft);
+                }}
+              >
+                { Cell }
+              </Grid>
+            )}
+          </AutoSizer>
+        </div>
       </div>
     </div>
   );
