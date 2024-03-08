@@ -16,10 +16,10 @@ export default function InventorySelector({ inventories, dialects, onClose, onCl
   const [ selectedLangIndex, setSelectedLangIndex ] = useState(0);
   
   const languages = Object.entries(inventories)
-    .filter(([langName, langInvs]) => langName.toLowerCase().includes(searchTerm.toLowerCase()) )
+    .filter(([langName, _]) => langName.toLowerCase().includes(searchTerm.toLowerCase()) )
     .sort((a, b) => {
-      let [langNameA, langInvsA] = a;
-      let [langNameB, langInvsB] = b;
+      let [langNameA, _] = a;
+      let [langNameB, _] = b;
       return langNameA.localeCompare(langNameB);
     });
   const selectedLanguage = languages[selectedLangIndex];

@@ -1,5 +1,3 @@
-import Segment from "./Segment.mjs";
-
 class Inventory {
   /**
    * A segment inventory

@@ -1,5 +1,4 @@
 import FeaturalSpecifications from "./FeaturalSpecifications.mjs";
-import RawPhoibleData from "./RawPhoibleData.mjs";
 
 class Segment {
   // These fields are lazy-evaluated, so unless they were provided on
