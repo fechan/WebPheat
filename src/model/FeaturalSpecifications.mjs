@@ -1,5 +1,3 @@
-import RawPhoibleData from "./RawPhoibleData.mjs";
-
 class FeaturalSpecifications {
   #featSpecsDict;
   #featSpecsBytes;
