@@ -1,67 +1,122 @@
-import { VariableSizeGrid as Grid } from 'react-window';
+import { FixedSizeGrid as Grid, FixedSizeList as List } from 'react-window';
 import AutoSizer from "react-virtualized-auto-sizer";
+import { useRef } from 'react';
 
-export default function({ features, inventory, initialInventory, ruleTransformation }) {
+export default function FeatureTable({ features, inventory, initialInventory, ruleTransformation }) {
   let segments = inventory?.segments ?? [];
   segments = segments.filter(seg => seg.getFeatSpecs());
   let initialSegments = initialInventory?.segments;
 
   function Cell({ columnIndex, rowIndex, style }) {
-    if (rowIndex === 0 && columnIndex === 0) {
-      return <div style={ style } className="border-b p-2 flex items-end justify-center">
-        <span>phoneme</span>
-      </div>
-    }
-
-    if (rowIndex === 0 && columnIndex > 0) {
-      return <div style={ style } className="border-b p-2 flex items-end justify-center">
-        <span>{ features[columnIndex - 1].replace(/([A-Z])/g, ' $1').toLowerCase() }</span>
-      </div>
-    }
-
-    if (columnIndex === 0) {
-      return <div style={ style }>
-        { ( initialSegments && initialSegments[rowIndex - 1].getIpa() ) }
-        { initialSegments && <span className="mx-1">➜</span> }
-        { segments[rowIndex - 1].getIpa() ?? "?" }
-      </div>
-    }
-
-    if (columnIndex > 0) {
-      const featureName = features[columnIndex - 1];
-      const featureValue = segments[rowIndex - 1].getFeatSpecs().getDict()[featureName];
-      const isZero = featureValue === "0";
-      return <div
-        style={ style }
-        className={ "border-s " +
-          (isZero ? "text-gray-300" : "") +
-          ((featureName in ruleTransformation) ? "bg-yellow-200" : "")
-        }
-      >
-        { featureValue }
-      </div>
-    }
+    const featureName = features[columnIndex];
+    const featureValue = segments[rowIndex].getFeatSpecs().getDict()[featureName];
+    const isZero = featureValue === "0";
+    return <div
+      style={ style }
+      className={ "feature-cell border-e  " +
+        (isZero ? "text-gray-300" : "") +
+        ((featureName in ruleTransformation) ? "bg-yellow-200" : "")
+      }
+    >
+      { featureValue }
+    </div>
   }
 
-  const rowHeight = (row) => row === 0 ? 45*1.75 : 45;
-  const columnWidth = (col) => col === 0 ? 100*1.5 : 100;
+  function PhonemeRow({ index, style }) {
+    return <div style={ style } className="feature-cell text-2xl border-e">
+      { ( initialSegments && initialSegments[index].getIpa() ) }
+      { initialSegments && <span className="mx-1">➜</span> }
+      { segments[index].getIpa() ?? "?" }
+    </div>
+  }
+
+  function FeatureColHeader({ index, style }) {
+    return <div
+      className="border-b p-2 flex items-end justify-center"
+      style={ style }
+    >
+        <span>{ features[index].replace(/([A-Z])/g, ' $1').toLowerCase() }</span>
+    </div>
+  }
+
+  const featureHeaderRef = useRef(null);
+  const phonemeColRef = useRef(null);
+  const featMatrixRef = useRef(null);
 
   return (
-    <div style={{ flex: '1 1 auto' }}>
-    <AutoSizer>
-      {({ height, width }) => (
-        <Grid
-          width={ width }
-          height={ height }
-          columnCount={ features.length + 1 }
-          rowCount={ segments.length + 1 }
-          rowHeight={ rowHeight }
-          columnWidth={ columnWidth }
-        >
-          { Cell }
-        </Grid>
-      )}
-    </AutoSizer>
+    <div className="flex flex-auto">
+      <div className="grid [grid-template-rows:80px_1fr]">
+        <div className="[width:150px] [height:80px] border-b border-e p-2 flex items-end justify-center">
+          <span>phoneme</span>
+        </div>
+
+        <div>
+          <AutoSizer disableWidth>
+            {({height})=>(<List
+              className="[scrollbar-width:none]"
+              ref={ phonemeColRef }
+              width={ 150 }
+              height={ height }
+              itemCount={ segments.length }
+              itemSize={ 45 }
+              onScroll={({ scrollOffset }) => {
+                if (featMatrixRef.current)
+                  featMatrixRef.current.scrollTo({scrollTop: scrollOffset});
+              }}
+            >
+              { PhonemeRow }
+            </List>)}
+          </AutoSizer>
+        </div>
+      </div>
+      
+      <div className="flex flex-col flex-auto">
+        <div>
+          <AutoSizer disableHeight>
+            {({ width }) => (
+              <List
+                className="[scrollbar-width:none]"
+                ref={ featureHeaderRef }
+                width={ width }
+                height={ 80 }
+                itemCount={ features.length }
+                itemSize={ 100 }
+                layout="horizontal"
+                onScroll={({ scrollOffset }) => {
+                  if (featMatrixRef.current)
+                    featMatrixRef.current.scrollTo({scrollLeft: scrollOffset});
+                }}
+              >
+                { FeatureColHeader }
+              </List>
+            )}
+          </AutoSizer>
+        </div>
+
+        <div className="flex-auto">
+          <AutoSizer>
+            {({ height, width }) => (
+              <Grid
+                ref={ featMatrixRef }
+                width={ width }
+                height={ height }
+                columnCount={ features.length }
+                rowCount={ segments.length }
+                rowHeight={ 45 }
+                columnWidth={ 100 }
+                onScroll={({ scrollLeft, scrollTop }) => {
+                  if (featureHeaderRef.current)
+                    featureHeaderRef.current.scrollTo(scrollLeft);
+                  if (phonemeColRef.current)
+                    phonemeColRef.current.scrollTo(scrollTop);
+                }}
+              >
+                { Cell }
+              </Grid>
+            )}
+          </AutoSizer>
+        </div>
+      </div>
     </div>
   );
 }

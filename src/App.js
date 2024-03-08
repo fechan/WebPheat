@@ -110,7 +110,7 @@ function App() {
         </div>
       </div>
 
-      <div class="flex justify-center">
+      <div className="flex justify-center border-b p-3">
         <fieldset className="flex flex-col gap-1 text-left">
           <label>
             <input type="checkbox" checked={ showComplex } onChange={ toggleShowComplex }/>
