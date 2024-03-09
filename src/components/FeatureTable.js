@@ -1,6 +1,6 @@
 import { FixedSizeGrid as Grid, FixedSizeList as List } from 'react-window';
 import AutoSizer from "react-virtualized-auto-sizer";
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 /**
  * A table of distinctive features for the phonemes in a given inventory
@@ -12,6 +12,8 @@ import { useRef } from 'react';
  * @returns Feature table
  */
 export default function FeatureTable({ features, inventory, initialInventory, ruleTransformation }) {
+  let [ hoverRow, setHoverRow ] = useState(null);
+
   let segments = inventory?.segments ?? [];
   segments = segments.filter(seg => seg.getFeatSpecs());
   let initialSegments = initialInventory?.segments;
@@ -26,8 +28,11 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
       style={ style }
       className={ "feature-cell border-e text-xl " +
         (isZero ? "text-gray-300 " : "") +
+        ((hoverRow === rowIndex) ? "bg-blue-50 " : "") +
         ((featureName in ruleTransformation) ? "bg-yellow-200 " : "")
       }
+      onMouseOver={ () => setHoverRow(rowIndex) }
+      onMouseOut={ () => setHoverRow(null) }
     >
       { featureValue?.replace("-", "−") /* replaces dashes with minus sign */ }
     </div>
@@ -38,8 +43,11 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
     return <div
       style={ style }
       className={ "feature-cell text-2xl border-e " +
+        ((hoverRow === index) ? "bg-blue-50 " : "") +
         (ipa ? "" : "bg-red-200 ")
       }
+      onMouseOver={ () => setHoverRow(index) }
+      onMouseOut={ () => setHoverRow(null) }
     >
       { ( initialSegments && initialSegments[index].getIpa() ) }
       { initialSegments && <span className="mx-1 text-sm">→</span> }
