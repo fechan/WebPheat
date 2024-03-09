@@ -30,7 +30,7 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
         (featureValue?.length > 4 ? "" : "text-xl ") +
         (isZero ? "text-gray-300 " : "") +
         ((hoverRow === rowIndex) ? "bg-blue-50 " : "") +
-        ((featureName in ruleTransformation) ? "bg-yellow-200 " : "")
+        ((featureName in ruleTransformation) ? "!bg-yellow-200 " : "")
       }
       onMouseOver={ () => setHoverRow(rowIndex) }
       onMouseOut={ () => setHoverRow(null) }
@@ -45,7 +45,7 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
       style={ style }
       className={ "feature-cell text-2xl border-e flex items-center justify-center " +
         ((hoverRow === index) ? "bg-blue-50 " : "") +
-        (ipa ? "" : "bg-red-200 ")
+        (ipa ? "" : "!bg-red-200 ")
       }
       onMouseOver={ () => setHoverRow(index) }
       onMouseOut={ () => setHoverRow(null) }
