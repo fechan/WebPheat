@@ -9,10 +9,17 @@ import FeatureTable from "./components/FeatureTable";
 import logo from "./duck.webp";
 
 function App() {
+  let [ showComplex, setShowComplex ] = useState(false);
+  const toggleShowComplex = () => setShowComplex(!showComplex);
+  let [ showExtraVariables, setShowExtraVariables ] = useState(false);
+  const toggleShowExtraVariables = () => setShowExtraVariables(!showExtraVariables);
+  let [ showRedundantFeatures, setShowRedundantFeatures ] = useState(false);
+  const toggleShowRedundantFeatures = () => setShowRedundantFeatures(!showRedundantFeatures);
+
   let [ phoibleInventories, setPhoibleInventories ] = useState({ "inventories": {}, "dialects": {} });
 
   let [ rawData, setRawData ] = useState();
-  let features = rawData ? rawData.features : [];
+  
   let featureValues = rawData ? rawData.featureValues : [];
 
   let [ inventoryInput, setInventoryInput ] = useState("t k s p");
@@ -29,10 +36,13 @@ function App() {
     inventory = initialInventory.transform(ruleTransformation, ruleFilter);
   }
 
-  let [ showComplex, setShowComplex ] = useState(false);
-  const toggleShowComplex = () => setShowComplex(!showComplex);
-  let [ showExtraVariables, setShowExtraVariables ] = useState(false);
-  const toggleShowExtraVariables = () => setShowExtraVariables(!showExtraVariables);
+  let features = inventory ? rawData.features : [];
+  
+  let spreadsheetFeatures = features;
+  if (features.length > 0 && !showRedundantFeatures) {
+    const forceShow = [...Object.keys(ruleTransformation), ...Object.keys(ruleFilter)]
+    spreadsheetFeatures = inventory.getNonRedundantFeatures(forceShow);
+  }
 
   let [ showInventorySelect, setShowInventorySelect ] = useState(false);
 
@@ -120,11 +130,15 @@ function App() {
             <input type="checkbox" checked={ showExtraVariables } onChange={ toggleShowExtraVariables }/>
             <span className="ms-1">Show more alpha notation variables in rule selectors</span>
           </label>
+          <label>
+            <input type="checkbox" checked={ showRedundantFeatures } onChange={ toggleShowRedundantFeatures }/>
+            <span className="ms-1">Show features where values are all the same</span>
+          </label>
         </fieldset>
       </div>
 
       <FeatureTable
-        features={ features }
+        features={ spreadsheetFeatures }
         inventory={ inventory }
         initialInventory={ initialInventory }
         ruleTransformation={ ruleTransformation }
