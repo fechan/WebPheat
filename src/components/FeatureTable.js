@@ -26,7 +26,8 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
     const isZero = featureValue === "0";
     return <div
       style={ style }
-      className={ "feature-cell border-e text-xl flex items-center justify-center " +
+      className={ "feature-cell border-e flex items-center justify-center " +
+        (featureValue?.length > 4 ? "" : "text-xl ") +
         (isZero ? "text-gray-300 " : "") +
         ((hoverRow === rowIndex) ? "bg-blue-50 " : "") +
         ((featureName in ruleTransformation) ? "bg-yellow-200 " : "")
@@ -34,7 +35,7 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
       onMouseOver={ () => setHoverRow(rowIndex) }
       onMouseOut={ () => setHoverRow(null) }
     >
-      <span>{ featureValue?.replace("-", "−") /* replaces dashes with minus sign */ }</span>
+      <span>{ featureValue?.replaceAll("-", "−") /* replaces dashes with minus sign */ }</span>
     </div>
   }
 
