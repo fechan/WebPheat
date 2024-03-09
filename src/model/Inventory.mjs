@@ -37,9 +37,11 @@ class Inventory {
     if (this.nonRedundantFeatures) {
       return merge(this.nonRedundantFeatures, includeFeatures);
     }
+    if (this.segments.length === 0) return includeFeatures;
 
     this.nonRedundantFeatures = [];
     const firstSegment = this.segments[0];
+
     const allFeatures = Object.keys(firstSegment.getFeatSpecs().getDict())
 
     for (let feature of allFeatures) {
