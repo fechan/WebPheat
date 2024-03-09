@@ -24,7 +24,7 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
     const isZero = featureValue === "0";
     return <div
       style={ style }
-      className={ "feature-cell border-e " +
+      className={ "feature-cell border-e text-xl " +
         (isZero ? "text-gray-300 " : "") +
         ((featureName in ruleTransformation) ? "bg-yellow-200 " : "")
       }
