@@ -26,7 +26,7 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
     const isZero = featureValue === "0";
     return <div
       style={ style }
-      className={ "feature-cell border-e text-xl " +
+      className={ "feature-cell border-e text-xl flex items-center justify-center " +
         (isZero ? "text-gray-300 " : "") +
         ((hoverRow === rowIndex) ? "bg-blue-50 " : "") +
         ((featureName in ruleTransformation) ? "bg-yellow-200 " : "")
@@ -34,7 +34,7 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
       onMouseOver={ () => setHoverRow(rowIndex) }
       onMouseOut={ () => setHoverRow(null) }
     >
-      { featureValue?.replace("-", "−") /* replaces dashes with minus sign */ }
+      <span>{ featureValue?.replace("-", "−") /* replaces dashes with minus sign */ }</span>
     </div>
   }
 
@@ -42,16 +42,18 @@ export default function FeatureTable({ features, inventory, initialInventory, ru
     const ipa = segments[index].getIpa();
     return <div
       style={ style }
-      className={ "feature-cell text-2xl border-e " +
+      className={ "feature-cell text-2xl border-e flex items-center justify-center " +
         ((hoverRow === index) ? "bg-blue-50 " : "") +
         (ipa ? "" : "bg-red-200 ")
       }
       onMouseOver={ () => setHoverRow(index) }
       onMouseOut={ () => setHoverRow(null) }
     >
-      { ( initialSegments && initialSegments[index].getIpa() ) }
-      { initialSegments && <span className="mx-1 text-sm">→</span> }
-      { ipa ?? "?" }
+      <span>
+        { ( initialSegments && initialSegments[index].getIpa() ) }
+        { initialSegments && <span className="mx-1 text-sm">→</span> }
+        { ipa ?? "?" }
+      </span>
     </div>
   }
 
