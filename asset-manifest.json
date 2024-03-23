@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/WebPheat/static/css/main.3d549e3c.css",
+    "main.js": "/WebPheat/static/js/main.f9c08e63.js",
+    "static/js/787.aadca95f.chunk.js": "/WebPheat/static/js/787.aadca95f.chunk.js",
+    "static/media/CharisSIL-Regular.ttf": "/WebPheat/static/media/CharisSIL-Regular.183c08f41bf65a1f89ae.ttf",
+    "static/media/duck.webp": "/WebPheat/static/media/duck.d6b6f8e0742b8c0153c8.webp",
+    "index.html": "/WebPheat/index.html",
+    "main.3d549e3c.css.map": "/WebPheat/static/css/main.3d549e3c.css.map",
+    "main.f9c08e63.js.map": "/WebPheat/static/js/main.f9c08e63.js.map",
+    "787.aadca95f.chunk.js.map": "/WebPheat/static/js/787.aadca95f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3d549e3c.css",
+    "static/js/main.f9c08e63.js"
+  ]
+}
